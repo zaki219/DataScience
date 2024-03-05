@@ -1,0 +1,7 @@
+for numbers in range(0,21):
+    if numbers %2 == 0:
+        print(numbers,'is even')
+    else:
+        print(numbers,'is odd')
+
+        
