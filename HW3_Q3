@@ -1,0 +1,24 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+file_path = '/Users/zacharynemnijones/Desktop/Brooklyn_Bridge_Automated_Pedestrian_Counts_Demonstration_Project.csv'
+df = pd.read_csv(file_path)
+print(df.head())
+df['hour_beginning'] = pd.to_datetime(df['hour_beginning'])
+df['hour'] = df['hour_beginning'].dt.hour
+df.sort_values('hour_beginning', inplace=True)
+df.reset_index(drop=True, inplace=True)
+df['temperature'].fillna(method='ffill', inplace=True)
+df['precipitation'].fillna(method='ffill', inplace=True)
+df['weather_summary'].fillna(method='ffill', inplace=True)
+
+def determine_time_of_day(hour):
+    if 0 <= hour < 6:
+        return 'Night'
+    elif 6 <= hour < 12:
+        return 'Morning'
+    elif 12 <= hour < 18:
+        return 'Afternoon'
+    else:
+        return 'Evening'
+df['time_of_day'] = df['hour'].apply(determine_time_of_day)
+print(df['time_of_day'])
